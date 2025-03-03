@@ -32,7 +32,7 @@
       // Initialize
       document.addEventListener("DOMContentLoaded", () => {
         // Set default date to today
-        const today = new Date().toISOString().split("T")[0];
+        const today = new Date().toLocaleDateString('en-CA');
         document.getElementById("date").value = today;
         document.getElementById("entry-date").value = today;
 
@@ -458,7 +458,7 @@
         addEntryForm.reset();
 
         // Set default date to today
-        const today = new Date().toISOString().split("T")[0];
+        const today = new Date().toLocaleDateString('en-CA');
         document.getElementById("date").value = today;
         document.getElementById("entry-date").value = today;
       }
