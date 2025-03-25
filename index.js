@@ -80,29 +80,32 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(exercises));
       }
 
-      // Render all exercises
-      function renderExercises() {
-        // Update visibility of no exercises message
-        noExercisesText.style.display = exercises.length > 0 ? "none" : "block";
-        exercisesContainer.style.display =
-          exercises.length > 0 ? "flex" : "none";
+    // Render all exercises
+    function renderExercises() {
+      noExercisesText.style.display = exercises.length > 0 ? "none" : "block";
+      exercisesContainer.style.display = exercises.length > 0 ? "flex" : "none";
 
-        // Only show the Clear All button if exercises exist
-        if (exercises.length > 0) {
-          clearAllBtn.style.display = "block";
-        } else {
-          clearAllBtn.style.display = "none";
-        }
-
-        // Clear existing exercises
-        exercisesContainer.innerHTML = "";
-
-        // Render each exercise
-        exercises.forEach((exercise, index) => {
-          const exerciseCard = createExerciseCard(exercise, index);
-          exercisesContainer.appendChild(exerciseCard);
-        });
+      if (exercises.length > 0) {
+        clearAllBtn.style.display = "block";
+      } else {
+        clearAllBtn.style.display = "none";
       }
+
+      exercisesContainer.innerHTML = "";
+
+      //sort exercises alphabetically by name
+      const sortedExercises = [...exercises].sort((a, b) => 
+        a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      );
+
+      //render each exercise in sorted order
+      sortedExercises.forEach((exercise) => {
+        //find the original index of this exercise in the unsorted array
+        const originalIndex = exercises.findIndex(ex => ex.name === exercise.name);
+        const exerciseCard = createExerciseCard(exercise, originalIndex);
+        exercisesContainer.appendChild(exerciseCard);
+      });
+    }
 
       // Create an exercise card
       function createExerciseCard(exercise, index) {
